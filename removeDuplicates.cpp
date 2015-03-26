@@ -1,0 +1,34 @@
+#include <iostream>
+
+using namespace std;
+
+class Solution{
+public:
+	int removeDuplicates(int A[],int n){
+		if(n==0) return 0;
+		int index=0;
+		for(int i=1;i<n;i++){
+			if(A[index]!=A[i]){
+				A[++index]=A[i];
+			}
+		}
+		return index+1;
+	}
+}
+
+class Solution{
+public:
+	int removeDuplicates(int A[],int n){
+		if(n<=2) return n;
+		int index=2;
+		for(int i=2;i<n;i++){
+			if(A[index-2]!=A[i]){
+				A[index++]=A[i];
+			}
+		}
+		return index;
+	}
+}
+int main(int argc, char *argv[]) {
+	
+}
