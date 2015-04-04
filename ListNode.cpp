@@ -65,6 +65,50 @@ ListNode *partition(ListNode* head, int x){
 	}
 }
 
+ListNode *deleteDuplicates(ListNode *head){
+	if(head == null) return null;
+	for(ListNode *prev=head,*cur = head->next;cur;cur=cur->next){
+		if(prev->val == cur->val){
+			prev->next=cur->next;  
+			delete cur;
+		}else{
+			prev=cur;
+		}
+	}
+	return head;
+}
+
+ListNode *deleteDuplicates(ListNoe *head){
+	if(head == null) return null;
+	ListNode dummy(INT_MIN);
+	dummy.next=-ead;
+	ListNode *prev = &dummy;
+	*cur = head;
+	while(cur!=NULL){
+		bool duplicated = false;
+		while(cur-next != NULL&& cur->next->val == cur->val){
+			duplicated = true;
+			ListNode *temp = cur;
+			cur=cur->next;
+			delete temp;
+			if(duplicated){
+				ListNode *temp = cur;
+				cur=cur->next;
+				delete temp;
+				continue;
+			}
+			prev->next= cur;
+			prev=prev->next;
+			cur=cur->next;
+		}
+		
+	}
+	prev ->next = cur;
+	return dummy.next;
+	
+}
+
+
 int main(int argc, char *argv[]) {
 	
 }
