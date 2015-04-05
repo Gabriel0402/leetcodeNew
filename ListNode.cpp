@@ -104,10 +104,88 @@ ListNode *deleteDuplicates(ListNoe *head){
 		
 	}
 	prev ->next = cur;
+	return dummy.next;	
+}
+
+ListNode *rotateRight(ListNode* head, int k){
+	if(head==NULL || k==0） return head;
+	int len=1;
+	 ListNode *p=head;
+	while(p->next){
+		len++;
+		p=p->next;
+	}
+	k=len-%len;
+	p->next=head;
+	for(int i=0;i<k;i++){
+		p=p->next;
+	}
+	head=p->next;
+	p->next=NULL;
+	return head;
+}
+
+ListNode *removeNthFromEnd(ListNode *head, int n){
+	ListNode dummy{-1,head};
+	ListNode *p=&dummy;
+	ListNode *q=&dummy;
+	for(int i=0;i<n;i++){
+		q=q->next;
+	}
+	while(q->next){
+		p=p->next;
+		q=q->next;
+	}
+	ListNode *tmp = p->next;
+	p->next=p->next-next;
+	delete tmp; 
+	return dummy.next;
+}
+
+ListNode *swapPairs(ListNode *head){
+	if(head == NULL || head->next ==NULL) return head;
+	ListNode dummy(-1);
+	dummy.next=head;
+	ListNode *prev = &dummy;
+	ListNode *cur = prev->next;
+	ListNode *next = cur->next;
+	while(next && cur->next){
+		cur->next=next->next;
+		next->next=prev->next; 
+		prev->next=next;
+		next=cur->next;
+		pre=cur;
+		cur=pre->next；
+		if(cur==NULL) break;
+		next=cur->next
+		
+	}
+	return dummy.next;
+}
+
+ListNode *reverseKGroup(ListNode *head, int k){
+	if(head ==NULL || head->next ==NULL || k<2) return head;
+	ListNode dummy(-1);
+	dummy.next = head;
+	for(ListNode *prev = &dummy, *end = head;end; end=prev->next){
+		for(int i=1;i<k && end;i++){
+			end =end->next;
+		}
+		if(end==NULL) break;
+		prev=reverse(prev,prev->next,end);
+	}
 	return dummy.next;
 	
 }
-
+ListNode *reverse(ListNode *prev, ListNode *begin, ListNode *end){
+	ListNode *end_next = end->next;
+	for(ListNode *p=begin,*cur=p->next,*next=cur->next;cur!=end_next; p=cur,cur=next, next=next?next->next:NULL){
+		cur->next = p;
+	}
+	begin->next = end_next;
+	prev->next = end;
+	return begin;
+}
 
 int main(int argc, char *argv[]) {
 	
