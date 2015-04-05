@@ -231,6 +231,60 @@ ListNode hasCycle(ListNode *head){
 	}
 	return false;
 }
+
+ListNode *detectCycle(ListNode *head){
+	ListNode* slow = head;
+	ListNode* fast = head;
+	while(fast && fast ->next){
+		slow = slow->next;
+		fast = fast->next->next;
+		if(slow==fast){
+			ListNode *slow2 = head;
+			while(slow2!=slow){
+				slow=slow->next;
+				slow2 = slow2->next;
+				
+			}
+			return slow2;
+		}
+	}
+	return NULL;
+}
+
+void reorderList(ListNode *head){
+	if(head==NULL || head->next== NULL) return;
+	ListNode *slow = head, *fast = head, *prev = NULL;
+	while(fast && fast->next){
+		prev = slow;
+		slow = slow->next;
+		fast = fast->next->next;
+	} 
+	prev->next = NULL;
+	slow = reverse(slow);
+	
+	ListNode *curr = head;
+	while(curr ->next){
+		ListNode *tmp = curr ->next;
+		curr->next = slow;
+		slow = slow ->next;
+		curr->next->next = tmp;
+		curr = tmp;
+	}
+	curr->next=slow;
+} 
+
+ListNode *reverse(ListNode *head){
+	if(head ==NULL || head->next ==NULL) return head;
+	
+	ListNode *prev = head;
+	for(ListNode *curr = head ->next, *next=curr->next;curr;prev = curr,curr=next,next=next?next->next:NULL){
+		curr->next=prev;
+	}
+	head->next=NULL;
+	return prev;
+}
+
+
 int main(int argc, char *argv[]) {
 	
 }
