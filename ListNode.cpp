@@ -187,6 +187,50 @@ ListNode *reverse(ListNode *prev, ListNode *begin, ListNode *end){
 	return begin;
 }
 
+struct RandomListNode{
+	int val;
+	RandomListNode *next, *random;
+	RandomListNode(int x): label(x), next(NULL) ,random(NULL){}
+};
+
+RandomList *copyRandomList(RandomListNode *head){
+	if(head ==NULL) return head;
+	RandomListNode *cur = head;
+	RandomListNode *copyhead = NULL;
+	RandomListNode *copycur = NULL;
+	while (cur!=NULL) {
+		copycur = new RandomListNode(cur->label)；
+		if(copyhead==NULL) copyhead = copycur;
+		copycur ->next = cur->next;
+		cur->next = copycur;
+		cur=cur->next;
+	}
+	cur = head; 
+	while(cur!=NULL){
+		cur->next->random = cur->random!=NULL?cur->random->next:NULL;
+		cur= cur->next->next;
+	}
+	cur = head;
+	while (cur!=NULL) {
+		copycur = cur->next;
+		cur->next = cur->next->next;
+		copycur->next=cur->next!=NULL?cur->next->next:NULL;
+		cur=cur->next;
+	}
+	return copyhead;
+}
+
+
+ListNode hasCycle(ListNode *head){
+	ListNode *slow = head;
+	ListNode *fast = head;
+	while(fast && fast->next){
+		slow=slow->next;
+		fast = fast->next->next;
+		if(slow == fast) return true;
+	}
+	return false;
+}
 int main(int argc, char *argv[]) {
 	
 }
