@@ -147,3 +147,31 @@ bool isSymmetric(TreeNode *root){
 	}
 	return true;
 }
+
+bool isBalanced(TreeNode *root){
+	return balanceHeight(root)>0
+}
+
+int balanceHeight(TreeNode *root){
+	if(root==NULL) return 0;
+	int left=balanceHeight(root->left);
+	int right=balanceHeight(root->right);
+	if(left<0 || right<0 ||abs(left-right)>1) return -1;
+	return max(left,right)+1;
+}
+
+void flatten(TreeNode *root){
+	stack<TreeNode *> s;
+	if(root==NULL) return;
+	s.push(root);
+	while(!s.empty()){
+		TreeNode *p=s.top();
+		s.pop();
+		if(p->right) s.push(p->right);
+		if(p->left) s.push(p->left);
+		p->left=NULL;
+		if(!s.empty()) p->right=s.top();
+	}
+}
+
+
