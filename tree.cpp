@@ -174,4 +174,78 @@ void flatten(TreeNode *root){
 	}
 }
 
+void connect(TreeLinkNode *root){
+	if(root==NULL) return;
+	while(root){
+		TreeLinkNode *next=NULL;
+		TreeNode *prev = NULL;
+		for(;root;root=root->next){
+			if(!next) next=root->left?root->left:root->right;
+			if(root->left){
+				if(prev) prev->next=root->left;
+				prev=root->left;
+			}
+			if(root->right){
+				if(prev) prev->next=root->right;
+				prev=root->right;
+			}
+		}
+		root=next;
+	}
+}
 
+
+//recover BST
+void recoverTree(TreeNode* root){
+	pair<TreeNode*, TreeNode> broken;
+	TreeNode *prev=NULL;
+	TreeNode *cur=root;
+
+}
+int numTrees(int n){
+	return BST(1,n);
+}
+int BST(int start, int end){
+	if(start>=end) return 1;
+	int res=0;
+	for(int i=start;i<=end;i++){
+		res+=BST(start,i-1)*BST(i+1,end);
+	}
+	return res;
+}
+
+vector<TreeNode *> generateTrees(int n){
+	vector<TreeNode*> result;
+	build(result,1,n);
+	return result;
+}
+
+void build(vector<TreeNode*> &result,int nStart, int nEnd)
+{
+	if(nStart>nEnd) result.push_back(NULL);
+	else{
+		for(int =nStart;i<=nEnd;++i){
+			vector<TreeNode *> left;
+			build(left, nStart,i-1);
+			vector<TreeNode *> right;
+			build(right,i+1,nEnd);
+			for(int j=0;j<left.size();++j){
+				for(itn k=0;k<right.size();++k){
+					TreeNode *root = new TreeNode(i);
+					root->left=left[j];
+					root->right=right[k];
+					result.push_back(root);
+				}
+			}
+		}
+	}
+}
+
+bool isValid(TreeNode *root){
+	return isValidBST(root, INT_MIN,INT_MAX);
+}
+
+bool isValidBST(root,low,high){
+	if(root==NULL) retur true;
+	else return root->val>low && root->val<high && isValidBST(root->left,low,root->val) && isValidBST(root->right,root->val,high);
+}
