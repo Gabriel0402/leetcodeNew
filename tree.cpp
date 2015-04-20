@@ -249,3 +249,59 @@ bool isValidBST(root,low,high){
 	if(root==NULL) retur true;
 	else return root->val>low && root->val<high && isValidBST(root->left,low,root->val) && isValidBST(root->right,root->val,high);
 }
+
+TreeNode* sortedArrayToBST(vector<int>& num){
+	return sortedArrayToBST(num.begin(),num.end());
+}
+
+template<typename RandomAccessIterator>
+TreeNode* sortedArrayToBST(RandomAccessIterator first, RandomAccessIterator last){
+	const auto length=distance(first ,last);
+	if(length<=0) return NULL;
+	auto mid=first+length/2;
+	TreeNode* root=new TreeNode(*mid);
+	root->left=sortedArrayToBST(first,mid);
+	root->right=sortedArrayToBST(mid+1,last);
+	return root; 
+}
+
+int minDepth(const TreeNode *root){
+	return minDepth(root,false);
+}
+
+static int minDepth(const TreeNode *root, bool hasbrother){
+	if(!root) return hasbrother?INT_MAX:0;
+
+	return 1+min(minDepth(root->left,root->right!=NULL),minDepth(root->right,root->left!=NULL));
+}
+
+
+int maxDepth(TreeNode *root){
+	uf(root==NULL) return 0;
+	return max(maxDepth(rpoot->left),maxDepth(root->right))+1;
+}
+
+bool hasPathSum(TreeNode *root, int sum){
+	if(root==NULL) return false;
+	if(root->left == NULL && root->right==NULL) return sum==root->val;
+	return hasPathSum(root->left,sum-root->val) || hasPathSum(root->right,sum-root->val);
+}
+
+vector<vector<int>> pathSum(TreeNode *root,int sum)
+{
+	vecotr<vector<int>> result;
+	vector<int> cur;
+	pathSum(root,sum,cur,result);
+	return result;
+}
+
+void pathSum(TreeNode *root, int gap, vector<int> &cur, vector<vector<int>> &result){
+	if(root==NULL) return;
+	cur.push_back(root->val);
+	if(root->left == NULL && root->right==NULL){
+		if(gap==root->val) result.push_back(cur);
+	}
+	pathSum(root->left,gap-root->val,cur,result);
+	pathSum(root->right,gap-root->val,cur,result);
+	cur.pop_back();
+}
