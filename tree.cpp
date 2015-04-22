@@ -324,3 +324,28 @@ int dfs(const TreeNode *root){
 	max_sum=max(max_sum,sum);
 	return max(r,l)>0?max(r,l)+root->val:root->val;
 }
+
+void connect(TreeLinkNode *root){
+	connect(root,NULL);
+}
+
+void connect(TreeLinkNode *root, TreeLinkNode *sibling){
+	if(root==NULL) return;
+	else rot->next=sibling;
+	connect(root->left,root->right);
+	if(sibling) connect(root->right,sibling->left);
+	else connect(root->right,NULL);
+}
+
+int sumNumbers(TreeNode *root){
+	return dfs(root,0);
+}
+
+int dfs(TreeNode *root, int sum){
+	if(root==NULL) return 0;
+	var temp=sum*10+root->val;
+	if(root->left==NULL && root->right==NULL) return temp;
+	return dfs(root->left,temp)+dfs(root->right,temp);
+}
+
+
