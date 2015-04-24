@@ -56,3 +56,19 @@ ListNode *findINsertPos(ListNode *head,int x){
 		;
     return pre;
 }
+
+ListNode *sortList（ListNode *head）{
+	if(head==NULL||head->next==NULL) return head;
+	ListNode *fast=head, *slow=head;
+	while(fast->next!=NULL && fast->next->next!=NULL){
+		fast=fast->next->next;
+		slow=slow->next;
+	}
+	fast=slow;
+	slow=slow->next;
+	fast->next=NULL;
+	ListNode *l1=sortList(head);
+	ListNode *l2=sortList(slow);
+	return mergeTwoLists(l1,l2);
+}
+
