@@ -10,4 +10,18 @@ public:
         return f[n-1]>=0;
         
     }
+
+    int jump(int a[],int n){
+    	int result;
+    	int last=0;
+    	int cur=0;
+    	for(int i=0;i<n;++i){
+    		if(i>last){
+    			last=cur;
+    			++result;
+    		}
+    		cur=max(cur,i+a[i]);
+    	}
+    	return result;
+    }
 };
